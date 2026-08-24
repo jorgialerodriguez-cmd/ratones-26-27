@@ -10,110 +10,78 @@
 </head>
 <body class="bg-slate-100 font-sans min-h-screen text-slate-800 flex flex-col justify-between max-w-md mx-auto relative shadow-2xl border-x border-slate-200">
 
-  <!-- ==================== PANTALLA 1: LOGIN ==================== -->
+  <!-- PANTALLA 1: LOGIN -->
   <div id="loginScreen" class="absolute inset-0 bg-indigo-600 z-50 flex flex-col items-center justify-center p-6 text-white">
     <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm border-2 border-white/30 shadow-lg">
       <i data-lucide="user" class="w-12 h-12 text-white"></i>
     </div>
     <h1 class="text-2xl font-bold mb-1">¡Hola, Profe! 👋</h1>
     <p class="text-indigo-200 text-sm mb-6">Aula Ratones</p>
-
     <div class="w-full max-w-xs space-y-3">
-      <input type="password" id="passwordInput" placeholder="Introduce tu contraseña" 
-             class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-indigo-200 text-center text-lg focus:outline-none focus:ring-2 focus:ring-white">
-      
-      <button onclick="checkPassword()" 
-              class="w-full bg-white text-indigo-600 font-semibold py-3 rounded-xl shadow-lg hover:bg-indigo-50 active:scale-95 transition">
-        Entrar
-      </button>
+      <input type="password" id="passwordInput" placeholder="Introduce tu contraseña" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-indigo-200 text-center text-lg focus:outline-none focus:ring-2 focus:ring-white">
+      <button onclick="checkPassword()" class="w-full bg-white text-indigo-600 font-semibold py-3 rounded-xl shadow-lg hover:bg-indigo-50 active:scale-95 transition">Entrar</button>
       <p id="errorMsg" class="text-xs text-rose-300 text-center hidden font-medium">Contraseña incorrecta.</p>
     </div>
   </div>
 
-  <!-- ==================== PANTALLA 2: DASHBOARD PRINCIPAL ==================== -->
+  <!-- PANTALLA 2: DASHBOARD PRINCIPAL -->
   <div id="mainApp" class="hidden flex-1 flex flex-col p-4 space-y-4">
-    
-    <!-- Encabezado con Ajustes -->
     <header class="flex justify-between items-center bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold">
-          🐭
-        </div>
+        <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold">🐭</div>
         <div>
           <h2 class="font-bold text-slate-800 leading-tight">Aula Ratones</h2>
           <p class="text-xs text-slate-400">Cuaderno de Tutoría</p>
         </div>
       </div>
-      <button onclick="openSection('Ajustes')" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition">
-        <i data-lucide="settings" class="w-6 h-6"></i>
-      </button>
+      <button onclick="openSection('Ajustes')" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition"><i data-lucide="settings" class="w-6 h-6"></i></button>
     </header>
 
-    <!-- Calendario Mensual Principal -->
     <section class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex-1 flex flex-col justify-between">
       <div class="flex justify-between items-center mb-3">
         <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-600"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
         <h3 id="calendarMonth" class="font-bold text-slate-700 capitalize"></h3>
         <button onclick="changeMonth(1)" class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-600"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
       </div>
-
       <div class="grid grid-cols-7 text-center text-xs font-semibold text-slate-400 mb-2">
         <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
       </div>
-
       <div id="calendarDays" class="grid grid-cols-7 gap-1 text-center text-sm font-medium flex-1 items-center"></div>
     </section>
 
-    <!-- Menú de Botones Cuadrados -->
+    <!-- MENÚ BOTONES -->
     <footer class="grid grid-cols-2 gap-3 pt-1">
       <button onclick="openSection('Alumnos')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="users" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="users" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Alumnos</span>
       </button>
-
       <button onclick="openSection('Evaluación')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="clipboard-check" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="clipboard-check" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Evaluación</span>
       </button>
-
       <button onclick="openSection('Tutorías')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="calendar-heart" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="calendar-heart" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Tutorías</span>
       </button>
-
       <button onclick="openSection('Programación')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="book-open" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="book-open" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Programación</span>
       </button>
-
       <button onclick="openSection('Extraescolares')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="sparkles" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Extraescolares</span>
       </button>
-
       <button onclick="openSection('Pagos')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
-        <div class="p-3 bg-teal-50 text-teal-600 rounded-xl group-hover:scale-110 transition">
-          <i data-lucide="credit-card" class="w-6 h-6"></i>
-        </div>
+        <div class="p-3 bg-teal-50 text-teal-600 rounded-xl group-hover:scale-110 transition"><i data-lucide="credit-card" class="w-6 h-6"></i></div>
         <span class="font-semibold text-sm text-slate-700">Pagos</span>
       </button>
     </footer>
   </div>
 
-  <!-- ==================== VISTA MODAL / SECCIÓN ABIERTA ==================== -->
+  <!-- VISTA MODAL / SECCIÓN ABIERTA -->
   <div id="sectionModal" class="hidden absolute inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden">
     <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3 shrink-0">
-      <button id="modalBackBtn" onclick="handleModalBack()" class="flex items-center text-sm font-semibold text-slate-500 hover:text-indigo-600">
+      <button onclick="handleModalBack()" class="flex items-center text-sm font-semibold text-slate-500 hover:text-indigo-600">
         <i data-lucide="arrow-left" class="w-5 h-5 mr-1"></i> Volver
       </button>
       <h3 id="modalTitle" class="font-bold text-lg text-slate-800"></h3>
@@ -122,757 +90,250 @@
     <div id="modalContent" class="flex-1 overflow-y-auto"></div>
   </div>
 
-  <!-- ==================== MODAL SUBIR FOTO DEL ALUMNO ==================== -->
+  <!-- MODAL SUBIR FOTO -->
   <div id="uploadModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end justify-center p-4">
     <div class="bg-white w-full rounded-2xl p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center pb-2 border-b">
-        <h4 id="uploadCategoryTitle" class="font-bold text-slate-800 text-sm">Añadir Evidencia / Foto</h4>
+        <h4 id="uploadCategoryTitle" class="font-bold text-slate-800 text-sm">Añadir Foto</h4>
         <button onclick="closeUploadModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <input type="file" id="photoInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
-      <textarea id="photoComment" placeholder="Escribe un comentario sobre esta foto o actividad..." class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
-      <button onclick="processAndSavePhoto()" class="w-full bg-indigo-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-indigo-700 transition">Guardar en Galería</button>
+      <textarea id="photoComment" placeholder="Comentario..." class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
+      <button onclick="processAndSavePhoto()" class="w-full bg-indigo-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-indigo-700 transition">Guardar</button>
     </div>
   </div>
 
-  <!-- ==================== MODAL TUTORÍAS ==================== -->
+  <!-- MODAL TUTORÍAS -->
   <div id="tutoriaDetailModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end justify-center p-4">
     <div class="bg-white w-full rounded-2xl p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center pb-2 border-b">
-        <div>
-          <h4 id="tutoriaModalTitle" class="font-bold text-slate-800 text-sm"></h4>
-          <p id="tutoriaModalDate" class="text-[10px] text-slate-400"></p>
-        </div>
-        <button onclick="closeTutoriaDetailModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <div><h4 id="tutoriaModalTitle" class="font-bold text-slate-800 text-sm"></h4><p id="tutoriaModalDate" class="text-[10px] text-slate-400"></p></div>
+        <button onclick="closeTutoriaDetailModal()" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      
-      <textarea id="tutoriaModalNotes" placeholder="Escribe aquí los comentarios, pautas y acuerdos alcanzados en la tutoría..." class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-purple-500 outline-none h-36 resize-none"></textarea>
-
+      <textarea id="tutoriaModalNotes" placeholder="Notas de la tutoría..." class="w-full p-3 border border-slate-200 rounded-xl text-xs outline-none h-36 resize-none"></textarea>
       <div class="flex gap-2">
-        <button onclick="deleteTutoria()" class="bg-rose-50 text-rose-600 p-2.5 rounded-xl text-xs font-semibold hover:bg-rose-100 transition flex items-center justify-center">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-        </button>
-        <button onclick="saveTutoriaNotes()" class="flex-1 bg-purple-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-purple-700 transition">
-          Guardar Comentarios
-        </button>
+        <button onclick="deleteTutoria()" class="bg-rose-50 text-rose-600 p-2.5 rounded-xl text-xs font-semibold hover:bg-rose-100"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+        <button onclick="saveTutoriaNotes()" class="flex-1 bg-purple-600 text-white font-semibold py-2.5 rounded-xl text-xs">Guardar</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL NUEVO PAGO ==================== -->
+  <!-- MODAL NUEVO PAGO -->
   <div id="newPagoModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end justify-center p-4">
     <div class="bg-white w-full rounded-2xl p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center pb-2 border-b">
         <h4 class="font-bold text-slate-800 text-sm">Nuevo Evento de Pago</h4>
-        <button onclick="closePagoModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <button onclick="closePagoModal()" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      
       <div class="space-y-3 pt-2">
-        <div>
-          <label class="text-xs font-semibold text-slate-500 mb-1 block">Motivo / Nombre del evento</label>
-          <input type="text" id="pagoTitleInput" placeholder="Ej: Excursión al museo..." class="w-full p-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none">
-        </div>
-        <div>
-          <label class="text-xs font-semibold text-slate-500 mb-1 block">Importe (Opcional)</label>
-          <input type="text" id="pagoAmountInput" placeholder="Ej: 5€" class="w-full p-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none">
-        </div>
+        <div><label class="text-xs font-semibold text-slate-500 mb-1 block">Motivo</label><input type="text" id="pagoTitleInput" placeholder="Ej: Excursión..." class="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none"></div>
+        <div><label class="text-xs font-semibold text-slate-500 mb-1 block">Importe</label><input type="text" id="pagoAmountInput" placeholder="Ej: 5€" class="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none"></div>
       </div>
+      <button onclick="createPagoEvent()" class="w-full bg-teal-600 text-white font-semibold py-2.5 rounded-xl text-xs mt-2">Crear Evento</button>
+    </div>
+  </div>
 
-      <button onclick="createPagoEvent()" class="w-full bg-teal-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-teal-700 transition mt-2">Crear Evento</button>
+  <!-- MODAL NUEVA EXTRAESCOLAR -->
+  <div id="newExtraModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end justify-center p-4">
+    <div class="bg-white w-full rounded-2xl p-4 space-y-3 shadow-xl">
+      <div class="flex justify-between items-center pb-2 border-b">
+        <h4 class="font-bold text-slate-800 text-sm">Nueva Actividad</h4>
+        <button onclick="closeExtraModal()" class="text-slate-400"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3 pt-2">
+        <div><label class="text-xs font-semibold text-slate-500 mb-1 block">Actividad</label><input type="text" id="extraTitleInput" placeholder="Ej: Judo..." class="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none"></div>
+        <div><label class="text-xs font-semibold text-slate-500 mb-1 block">Horario</label><input type="text" id="extraScheduleInput" placeholder="Ej: L y X 16:00" class="w-full p-2.5 border border-slate-200 rounded-xl text-sm outline-none"></div>
+      </div>
+      <button onclick="createExtraescolar()" class="w-full bg-rose-600 text-white font-semibold py-2.5 rounded-xl text-xs mt-2">Crear Actividad</button>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    const studentsList = [
-      "1. A.A.M", "2. A.A.H", "3. G.B.C", "4. D.B.C", "5. T.G.E", "6. E.G.S",
-      "7. A.G.G", "8. L.I.S", "9. Q", "10. E.M.F", "11. L.N.G", "12. V.P.O",
-      "13. L.P.N", "14. V.R.M", "15. H.R.M", "16. H.S.A", "17. M.S.M", "18. A.V.P"
-    ];
-
+    const studentsList = ["1. A.A.M", "2. A.A.H", "3. G.B.C", "4. D.B.C", "5. T.G.E", "6. E.G.S", "7. A.G.G", "8. L.I.S", "9. Q", "10. E.M.F", "11. L.N.G", "12. V.P.O", "13. L.P.N", "14. V.R.M", "15. H.R.M", "16. H.S.A", "17. M.S.M", "18. A.V.P"];
     const studentCategories = [
-      { id: 'lecto', name: 'Lectoescritura', icon: 'pen-tool', color: 'indigo' },
-      { id: 'mates', name: 'Lógico-matemática', icon: 'shapes', color: 'emerald' },
-      { id: 'proyecto', name: 'Proyecto', icon: 'palette', color: 'amber' },
-      { id: 'patio', name: 'Patio', icon: 'sun', color: 'rose' },
-      { id: 'comedor', name: 'Comedor', icon: 'utensils', color: 'teal' }
+      { id: 'lecto', name: 'Lectoescritura', icon: 'pen-tool', color: 'indigo' }, { id: 'mates', name: 'Lógico-matemática', icon: 'shapes', color: 'emerald' },
+      { id: 'proyecto', name: 'Proyecto', icon: 'palette', color: 'amber' }, { id: 'patio', name: 'Patio', icon: 'sun', color: 'rose' }, { id: 'comedor', name: 'Comedor', icon: 'utensils', color: 'teal' }
     ];
 
-    let currentStudent = '';
-    let selectedCategory = null;
-    let modalHistory = [];
-
+    let currentStudent = ''; let selectedCategory = null; let modalHistory = [];
     function getPassword() { return localStorage.getItem('ratones_pwd') || '1234'; }
+    function checkPassword() { if (document.getElementById('passwordInput').value === getPassword()) { document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('mainApp').classList.remove('hidden'); renderCalendar(); } else document.getElementById('errorMsg').classList.remove('hidden'); }
+    function logout() { document.getElementById('passwordInput').value = ''; document.getElementById('errorMsg').classList.add('hidden'); closeSection(); document.getElementById('mainApp').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); }
+    function updatePassword() { const newPwd = document.getElementById('newPwdInput').value.trim(); if (newPwd) { localStorage.setItem('ratones_pwd', newPwd); document.getElementById('pwdSuccessMsg').classList.remove('hidden'); document.getElementById('newPwdInput').value = ''; setTimeout(() => document.getElementById('pwdSuccessMsg').classList.add('hidden'), 3000); } }
 
-    function checkPassword() {
-      const pwd = document.getElementById('passwordInput').value;
-      if (pwd === getPassword()) {
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('mainApp').classList.remove('hidden');
-        renderCalendar();
-      } else {
-        document.getElementById('errorMsg').classList.remove('hidden');
-      }
-    }
-
-    function logout() {
-      document.getElementById('passwordInput').value = '';
-      document.getElementById('errorMsg').classList.add('hidden');
-      closeSection();
-      document.getElementById('mainApp').classList.add('hidden');
-      document.getElementById('loginScreen').classList.remove('hidden');
-    }
-
-    function updatePassword() {
-      const newPwd = document.getElementById('newPwdInput').value.trim();
-      if (newPwd) {
-        localStorage.setItem('ratones_pwd', newPwd);
-        document.getElementById('pwdSuccessMsg').classList.remove('hidden');
-        document.getElementById('newPwdInput').value = '';
-        setTimeout(() => document.getElementById('pwdSuccessMsg').classList.add('hidden'), 3000);
-      }
-    }
-
-    // --- CALENDARIO PRINCIPAL ---
     let currentDate = new Date();
-
     function renderCalendar() {
-      const monthText = currentDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-      document.getElementById('calendarMonth').innerText = monthText;
-
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const grid = document.getElementById('calendarDays');
-      grid.innerHTML = '';
-
-      let startOffset = (firstDay === 0 ? 6 : firstDay - 1);
-      for (let i = 0; i < startOffset; i++) { grid.innerHTML += `<div></div>`; }
-
+      document.getElementById('calendarMonth').innerText = currentDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+      const year = currentDate.getFullYear(); const month = currentDate.getMonth();
+      const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const grid = document.getElementById('calendarDays'); grid.innerHTML = '';
+      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) grid.innerHTML += `<div></div>`;
       const today = new Date();
       for (let day = 1; day <= daysInMonth; day++) {
         const isToday = today.getDate() === day && today.getMonth() === month && today.getFullYear() === year;
-        const activeClass = isToday ? 'bg-indigo-600 text-white font-bold rounded-xl shadow-md' : 'text-slate-700 hover:bg-slate-100 rounded-lg';
-        grid.innerHTML += `<div class="p-2 cursor-pointer transition ${activeClass}">${day}</div>`;
+        grid.innerHTML += `<div class="p-2 cursor-pointer transition ${isToday ? 'bg-indigo-600 text-white font-bold rounded-xl shadow-md' : 'text-slate-700 hover:bg-slate-100 rounded-lg'}">${day}</div>`;
       }
     }
+    function changeMonth(delta) { currentDate.setMonth(currentDate.getMonth() + delta); renderCalendar(); }
 
-    function changeMonth(delta) {
-      currentDate.setMonth(currentDate.getMonth() + delta);
-      renderCalendar();
-    }
-
-    // --- NAVEGACIÓN GENERAL ---
     function handleModalBack() {
       if (modalHistory.length > 1) {
         modalHistory.pop();
         const prev = modalHistory[modalHistory.length - 1];
         if (prev.type === 'section') openSection(prev.name, false);
         else if (prev.type === 'student') openStudentDetail(prev.student, false);
-        else if (prev.type === 'pagos') renderPagosSection(); 
-      } else {
-        closeSection();
-      }
+        else if (prev.type === 'pagos') renderPagosSection();
+        else if (prev.type === 'extraescolares') renderExtraescolaresSection();
+      } else closeSection();
     }
 
     function openSection(name, pushHistory = true) {
       if (pushHistory) modalHistory = [{ type: 'section', name: name }];
       document.getElementById('modalTitle').innerText = name;
       const content = document.getElementById('modalContent');
-
       if (name === 'Ajustes') {
-        content.innerHTML = `
-          <div class="space-y-6 pt-2">
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-              <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2"><i data-lucide="key" class="w-4 h-4 text-indigo-600"></i> Cambiar Contraseña</h4>
-              <input type="password" id="newPwdInput" placeholder="Nueva contraseña" class="w-full p-2.5 border rounded-xl bg-white mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <button onclick="updatePassword()" class="w-full bg-indigo-600 text-white py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Guardar Nueva Contraseña</button>
-              <p id="pwdSuccessMsg" class="text-xs text-emerald-600 font-medium text-center mt-2 hidden">¡Contraseña actualizada con éxito!</p>
-            </div>
-            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-              <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2"><i data-lucide="log-out" class="w-4 h-4 text-rose-500"></i> Sesión</h4>
-              <button onclick="logout()" class="w-full bg-rose-500 text-white py-2 rounded-xl text-sm font-semibold hover:bg-rose-600 transition">Cerrar Sesión</button>
-            </div>
-          </div>`;
+        content.innerHTML = `<div class="space-y-6 pt-2"><div class="bg-slate-50 p-4 rounded-2xl border border-slate-200"><h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2"><i data-lucide="key" class="w-4 h-4 text-indigo-600"></i> Cambiar Contraseña</h4><input type="password" id="newPwdInput" placeholder="Nueva contraseña" class="w-full p-2.5 border rounded-xl bg-white mb-2 text-sm"><button onclick="updatePassword()" class="w-full bg-indigo-600 text-white py-2 rounded-xl text-sm font-semibold">Guardar Nueva Contraseña</button><p id="pwdSuccessMsg" class="text-xs text-emerald-600 font-medium text-center mt-2 hidden">¡Éxito!</p></div><div class="bg-slate-50 p-4 rounded-2xl border border-slate-200"><button onclick="logout()" class="w-full bg-rose-500 text-white py-2 rounded-xl text-sm font-semibold">Cerrar Sesión</button></div></div>`;
       } else if (name === 'Alumnos') {
         let gridHtml = `<div class="grid grid-cols-2 gap-3 pt-1">`;
-        studentsList.forEach(student => {
-          gridHtml += `
-            <button onclick="openStudentDetail('${student}')" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 flex flex-col items-center justify-center space-y-2 active:scale-95 transition">
-              <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm">
-                ${student.split('.')[1] || student.substring(0,2)}
-              </div>
-              <span class="font-bold text-sm text-slate-800">${student}</span>
-            </button>`;
-        });
-        gridHtml += `</div>`;
-        content.innerHTML = gridHtml;
-      } else if (name === 'Tutorías') {
-        renderTutoriasSection();
-      } else if (name === 'Programación') {
-        renderProgramacionSection();
-      } else if (name === 'Pagos') {
-        renderPagosSection();
-      } else {
-        content.innerHTML = `
-          <div class="flex flex-col items-center justify-center h-64 text-center p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-            <div class="p-4 bg-indigo-50 text-indigo-600 rounded-full mb-3"><i data-lucide="wrench" class="w-8 h-8"></i></div>
-            <h4 class="font-bold text-slate-700 mb-1">Sección de ${name}</h4>
-            <p class="text-sm text-slate-400">¡Lista para construir!</p>
-          </div>`;
-      }
-      document.getElementById('sectionModal').classList.remove('hidden');
-      lucide.createIcons();
+        studentsList.forEach(student => { gridHtml += `<button onclick="openStudentDetail('${student}')" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 flex flex-col items-center justify-center space-y-2 active:scale-95 transition"><div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm">${student.split('.')[1] || student.substring(0,2)}</div><span class="font-bold text-sm text-slate-800">${student}</span></button>`; });
+        content.innerHTML = gridHtml + `</div>`;
+      } else if (name === 'Tutorías') renderTutoriasSection();
+      else if (name === 'Programación') renderProgramacionSection();
+      else if (name === 'Pagos') renderPagosSection();
+      else if (name === 'Extraescolares') renderExtraescolaresSection();
+      else content.innerHTML = `<div class="flex flex-col items-center justify-center h-64 text-center"><p class="text-sm text-slate-400">¡En construcción!</p></div>`;
+      document.getElementById('sectionModal').classList.remove('hidden'); lucide.createIcons();
     }
+    function closeSection() { modalHistory = []; document.getElementById('sectionModal').classList.add('hidden'); }
 
-    function closeSection() {
-      modalHistory = [];
-      document.getElementById('sectionModal').classList.add('hidden');
-    }
-
-    // ==================== MÓDULO DE ALUMNOS (DETALLADO) ====================
-    function getStudentStorage() {
-      return JSON.parse(localStorage.getItem('ratones_alumnos_data') || '{}');
-    }
-
-    function saveStudentStorage(data) {
-      localStorage.setItem('ratones_alumnos_data', JSON.stringify(data));
-    }
-
+    // --- ALUMNOS ---
+    function getStudentStorage() { return JSON.parse(localStorage.getItem('ratones_alumnos_data') || '{}'); }
+    function saveStudentStorage(data) { localStorage.setItem('ratones_alumnos_data', JSON.stringify(data)); }
     function openStudentDetail(student, pushHistory = true) {
-      currentStudent = student;
-      if (pushHistory) modalHistory.push({ type: 'student', student: student });
-      
+      currentStudent = student; if (pushHistory) modalHistory.push({ type: 'student', student: student });
       document.getElementById('modalTitle').innerText = student;
-      const content = document.getElementById('modalContent');
-
-      content.innerHTML = `
-        <div class="space-y-4 pt-1">
-          <!-- Cabecera del alumno -->
-          <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-lg">
-              ${student.split('.')[1] || student.substring(0,2)}
-            </div>
-            <div>
-              <h4 class="font-bold text-slate-800">${student}</h4>
-              <p class="text-[11px] text-slate-400">Áreas de seguimiento y evidencias</p>
-            </div>
-          </div>
-
-          <!-- Botones de las 5 Áreas -->
-          <div class="space-y-2">
-            ${studentCategories.map(cat => `
-              <button onclick="openStudentCategory('${cat.id}')" class="w-full bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:bg-slate-50 flex items-center justify-between shadow-sm active:scale-98 transition group">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 bg-${cat.color}-50 text-${cat.color}-600 rounded-xl group-hover:scale-110 transition">
-                    <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
-                  </div>
-                  <span class="font-bold text-sm text-slate-700">${cat.name}</span>
-                </div>
-                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      `;
-      document.getElementById('sectionModal').classList.remove('hidden');
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pt-1"><div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200"><div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-lg">${student.split('.')[1] || student.substring(0,2)}</div><div><h4 class="font-bold text-slate-800">${student}</h4><p class="text-[11px] text-slate-400">Áreas de seguimiento</p></div></div><div class="space-y-2">${studentCategories.map(cat => `<button onclick="openStudentCategory('${cat.id}')" class="w-full bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-indigo-400 flex items-center justify-between"><div class="flex items-center gap-3"><div class="p-2.5 bg-${cat.color}-50 text-${cat.color}-600 rounded-xl"><i data-lucide="${cat.icon}" class="w-5 h-5"></i></div><span class="font-bold text-sm text-slate-700">${cat.name}</span></div><i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i></button>`).join('')}</div></div>`;
       lucide.createIcons();
     }
-
     function openStudentCategory(catId) {
-      const category = studentCategories.find(c => c.id === catId);
-      selectedCategory = category;
-      modalHistory.push({ type: 'studentCategory', catId: catId });
-
-      document.getElementById('modalTitle').innerText = category.name;
-      renderStudentCategoryView();
+      selectedCategory = studentCategories.find(c => c.id === catId); modalHistory.push({ type: 'studentCategory', catId: catId });
+      document.getElementById('modalTitle').innerText = selectedCategory.name; renderStudentCategoryView();
     }
-
     function renderStudentCategoryView() {
-      const allData = getStudentStorage();
-      const studentData = (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) || { notes: '', photos: [] };
-      const content = document.getElementById('modalContent');
-
-      content.innerHTML = `
-        <div class="space-y-4 pb-6">
-          <div class="bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-center">
-            <span class="text-xs font-semibold text-indigo-700">Alumno: ${currentStudent}</span>
-          </div>
-
-          <!-- Bloc de Notas -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex justify-between items-center">
-              <h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
-                <i data-lucide="file-text" class="w-4 h-4 text-indigo-500"></i> Bloc de Notas
-              </h5>
-              <span id="savedIndicator" class="text-[10px] text-slate-400 italic">Guardado automático</span>
-            </div>
-            <textarea id="catNotesInput" oninput="autoSaveCategoryNotes()" placeholder="Escribe aquí observaciones o progresos sobre ${selectedCategory.name}..." 
-                      class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-28 resize-none">${studentData.notes || ''}</textarea>
-          </div>
-
-          <!-- Galería de Fotos -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <div class="flex justify-between items-center">
-              <h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
-                <i data-lucide="image" class="w-4 h-4 text-indigo-500"></i> Galería
-              </h5>
-              <button onclick="openUploadModal()" class="cursor-pointer bg-indigo-50 text-indigo-700 font-semibold px-2.5 py-1 rounded-lg text-[11px] border border-indigo-200 hover:bg-indigo-100 transition flex items-center gap-1">
-                <i data-lucide="camera" class="w-3.5 h-3.5"></i> + Foto
-              </button>
-            </div>
-
-            <div id="studentPhotoList" class="space-y-3 pt-1">
-              ${(!studentData.photos || studentData.photos.length === 0) 
-                ? `<p class="text-xs text-slate-400 italic text-center py-4">No hay fotos registradas todavía.</p>`
-                : studentData.photos.map(p => `
-                  <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
-                    <div class="relative rounded-lg overflow-hidden max-h-48 border border-slate-100">
-                      <img src="${p.image}" class="w-full h-auto object-contain bg-slate-900/5">
-                      <button onclick="deleteStudentPhoto(${p.id})" class="absolute top-2 right-2 bg-slate-900/60 text-white p-1.5 rounded-lg hover:bg-rose-600 transition">
-                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                      </button>
-                    </div>
-                    <div class="px-1">
-                      <p class="text-xs text-slate-700 font-medium">${p.comment || '<span class="italic text-slate-400">Sin comentario</span>'}</p>
-                      <span class="text-[10px] text-slate-400 mt-1 block">${p.date || ''}</span>
-                    </div>
-                  </div>
-                `).join('')
-              }
-            </div>
-          </div>
-        </div>
-      `;
+      const allData = getStudentStorage(); const studentData = (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) || { notes: '', photos: [] };
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6"><div class="bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-center"><span class="text-xs font-semibold text-indigo-700">Alumno: ${currentStudent}</span></div><div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2"><div class="flex justify-between items-center"><h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5"><i data-lucide="file-text" class="w-4 h-4 text-indigo-500"></i> Notas</h5><span id="savedIndicator" class="text-[10px] text-slate-400 italic">Guardado automático</span></div><textarea id="catNotesInput" oninput="autoSaveCategoryNotes()" class="w-full p-3 border border-slate-200 rounded-xl text-xs h-28 resize-none">${studentData.notes || ''}</textarea></div><div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3"><div class="flex justify-between items-center"><h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5"><i data-lucide="image" class="w-4 h-4 text-indigo-500"></i> Galería</h5><button onclick="openUploadModal()" class="bg-indigo-50 text-indigo-700 font-semibold px-2.5 py-1 rounded-lg text-[11px] border border-indigo-200 flex items-center gap-1"><i data-lucide="camera" class="w-3.5 h-3.5"></i> + Foto</button></div><div id="studentPhotoList" class="space-y-3 pt-1">${studentData.photos.length === 0 ? `<p class="text-xs text-slate-400 italic text-center py-4">Sin fotos.</p>` : studentData.photos.map(p => `<div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2"><div class="relative rounded-lg overflow-hidden max-h-48 border border-slate-100"><img src="${p.image}" class="w-full h-auto object-contain bg-slate-900/5"><button onclick="deleteStudentPhoto(${p.id})" class="absolute top-2 right-2 bg-slate-900/60 text-white p-1.5 rounded-lg"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div><div class="px-1"><p class="text-xs text-slate-700 font-medium">${p.comment || 'Sin comentario'}</p><span class="text-[10px] text-slate-400 mt-1 block">${p.date || ''}</span></div></div>`).join('')}</div></div></div>`;
       lucide.createIcons();
     }
-
     function autoSaveCategoryNotes() {
-      const notes = document.getElementById('catNotesInput').value;
-      const allData = getStudentStorage();
-      
-      if (!allData[currentStudent]) allData[currentStudent] = {};
-      if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
-      
-      allData[currentStudent][selectedCategory.id].notes = notes;
-      saveStudentStorage(allData);
-
-      const indicator = document.getElementById('savedIndicator');
-      if (indicator) {
-        indicator.innerText = 'Guardado ✓';
-        indicator.classList.add('text-emerald-500');
-        setTimeout(() => {
-          indicator.innerText = 'Guardado automático';
-          indicator.classList.remove('text-emerald-500');
-        }, 1500);
-      }
+      const allData = getStudentStorage(); if (!allData[currentStudent]) allData[currentStudent] = {}; if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
+      allData[currentStudent][selectedCategory.id].notes = document.getElementById('catNotesInput').value; saveStudentStorage(allData);
+      const ind = document.getElementById('savedIndicator'); if(ind) { ind.innerText = 'Guardado ✓'; ind.classList.add('text-emerald-500'); setTimeout(() => { ind.innerText = 'Guardado automático'; ind.classList.remove('text-emerald-500'); }, 1500); }
     }
-
-    function openUploadModal() {
-      document.getElementById('uploadCategoryTitle').innerText = `${selectedCategory.name} - ${currentStudent}`;
-      document.getElementById('photoInput').value = '';
-      document.getElementById('photoComment').value = '';
-      document.getElementById('uploadModal').classList.remove('hidden');
-    }
-
-    function closeUploadModal() { 
-      document.getElementById('uploadModal').classList.add('hidden'); 
-    }
-
+    function openUploadModal() { document.getElementById('uploadCategoryTitle').innerText = `${selectedCategory.name} - ${currentStudent}`; document.getElementById('photoInput').value = ''; document.getElementById('photoComment').value = ''; document.getElementById('uploadModal').classList.remove('hidden'); }
+    function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
     function processAndSavePhoto() {
-      const fileInput = document.getElementById('photoInput');
-      const comment = document.getElementById('photoComment').value.trim();
-      const file = fileInput.files[0];
-      
-      if (!file) return;
-
+      const file = document.getElementById('photoInput').files[0]; const comment = document.getElementById('photoComment').value.trim(); if (!file) return;
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = new Image();
         img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxDim = 600;
-          let width = img.width;
-          let height = img.height;
-          if (width > height && width > maxDim) { height *= maxDim / width; width = maxDim; } 
-          else if (height > maxDim) { width *= maxDim / height; height = maxDim; }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
-          const allData = getStudentStorage();
-          if (!allData[currentStudent]) allData[currentStudent] = {};
-          if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
-
-          const dateStr = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-
-          allData[currentStudent][selectedCategory.id].photos.unshift({
-            id: Date.now(), image: compressedBase64, comment: comment, date: dateStr
-          });
-
-          saveStudentStorage(allData);
-          closeUploadModal();
-          renderStudentCategoryView();
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+          const canvas = document.createElement('canvas'); const maxDim = 600; let w = img.width, h = img.height;
+          if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; } else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+          canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          const compressed = canvas.toDataURL('image/jpeg', 0.6);
+          const allData = getStudentStorage(); if (!allData[currentStudent]) allData[currentStudent] = {}; if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
+          allData[currentStudent][selectedCategory.id].photos.unshift({ id: Date.now(), image: compressed, comment: comment, date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) });
+          saveStudentStorage(allData); closeUploadModal(); renderStudentCategoryView();
+        }; img.src = e.target.result;
+      }; reader.readAsDataURL(file);
     }
+    function deleteStudentPhoto(photoId) { const allData = getStudentStorage(); if (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) { allData[currentStudent][selectedCategory.id].photos = allData[currentStudent][selectedCategory.id].photos.filter(p => p.id !== photoId); saveStudentStorage(allData); renderStudentCategoryView(); } }
 
-    function deleteStudentPhoto(photoId) {
-      const allData = getStudentStorage();
-      if (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) {
-        allData[currentStudent][selectedCategory.id].photos = allData[currentStudent][selectedCategory.id].photos.filter(p => p.id !== photoId);
-        saveStudentStorage(allData);
-        renderStudentCategoryView();
-      }
-    }
-
-    // ==================== MÓDULO DE PAGOS Y AUTORIZACIONES ====================
-    let currentPagoEventId = null;
-
-    function getPagosData() {
-      return JSON.parse(localStorage.getItem('ratones_pagos') || '[]');
-    }
-
-    function savePagosData(data) {
-      localStorage.setItem('ratones_pagos', JSON.stringify(data));
-    }
-
+    // --- PAGOS ---
+    function getPagosData() { return JSON.parse(localStorage.getItem('ratones_pagos') || '[]'); }
+    function savePagosData(data) { localStorage.setItem('ratones_pagos', JSON.stringify(data)); }
     function renderPagosSection() {
-      document.getElementById('modalTitle').innerText = 'Control de Pagos';
-      const content = document.getElementById('modalContent');
-      const pagos = getPagosData();
-
-      content.innerHTML = `
-        <div class="space-y-4 pb-6 pt-1">
-          <button onclick="document.getElementById('newPagoModal').classList.remove('hidden')" class="w-full bg-teal-50 border border-dashed border-teal-300 text-teal-700 font-semibold py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-teal-100 transition">
-            <i data-lucide="plus-circle" class="w-5 h-5"></i> Nuevo Evento o Pago
-          </button>
-
-          <div class="space-y-3">
-            ${pagos.length === 0 ? `<p class="text-xs text-slate-400 italic text-center py-4">No hay eventos creados todavía.</p>` : ''}
-            ${pagos.map(pago => {
-              // Calcular estadisticas
-              const total = studentsList.length;
-              let authCount = 0;
-              let paidCount = 0;
-              
-              if(pago.records) {
-                Object.values(pago.records).forEach(rec => {
-                  if(rec.auth) authCount++;
-                  if(rec.paid) paidCount++;
-                });
-              }
-
-              return `
-                <div onclick="openPagoDetail(${pago.id})" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-teal-300 transition group relative">
-                  <div class="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 class="font-bold text-slate-800">${pago.title}</h4>
-                      <p class="text-xs text-slate-500">${pago.date} ${pago.amount ? `• <span class="font-bold text-teal-600">${pago.amount}</span>` : ''}</p>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 group-hover:text-teal-500"></i>
-                  </div>
-                  
-                  <div class="flex gap-4 border-t border-slate-100 pt-3">
-                    <div class="flex-1 bg-slate-50 rounded-lg p-2 text-center border border-slate-100">
-                      <p class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">Autorizaciones</p>
-                      <p class="text-sm font-bold ${authCount === total ? 'text-emerald-500' : 'text-slate-700'}">${authCount} <span class="text-xs text-slate-400 font-medium">/ ${total}</span></p>
-                    </div>
-                    <div class="flex-1 bg-slate-50 rounded-lg p-2 text-center border border-slate-100">
-                      <p class="text-[10px] font-semibold text-slate-500 mb-1 uppercase tracking-wider">Pagado</p>
-                      <p class="text-sm font-bold ${paidCount === total ? 'text-emerald-500' : 'text-slate-700'}">${paidCount} <span class="text-xs text-slate-400 font-medium">/ ${total}</span></p>
-                    </div>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
+      document.getElementById('modalTitle').innerText = 'Control de Pagos'; const pagos = getPagosData();
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6 pt-1"><button onclick="document.getElementById('newPagoModal').classList.remove('hidden')" class="w-full bg-teal-50 border border-dashed border-teal-300 text-teal-700 font-semibold py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-teal-100 transition"><i data-lucide="plus-circle" class="w-5 h-5"></i> Nuevo Evento</button><div class="space-y-3">${pagos.length === 0 ? `<p class="text-xs text-slate-400 italic text-center py-4">No hay eventos.</p>` : pagos.map(pago => {
+        let authCount = 0, paidCount = 0; if(pago.records) Object.values(pago.records).forEach(r => { if(r.auth) authCount++; if(r.paid) paidCount++; });
+        return `<div onclick="openPagoDetail(${pago.id})" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-teal-300"><div class="flex justify-between items-start mb-3"><div><h4 class="font-bold text-slate-800">${pago.title}</h4><p class="text-xs text-slate-500">${pago.date}</p></div><i data-lucide="chevron-right" class="w-5 h-5 text-slate-300"></i></div><div class="flex gap-4 border-t border-slate-100 pt-3"><div class="flex-1 bg-slate-50 rounded-lg p-2 text-center"><p class="text-[10px] font-semibold text-slate-500 uppercase">Aut.</p><p class="text-sm font-bold text-slate-700">${authCount} / ${studentsList.length}</p></div><div class="flex-1 bg-slate-50 rounded-lg p-2 text-center"><p class="text-[10px] font-semibold text-slate-500 uppercase">Pagado</p><p class="text-sm font-bold text-slate-700">${paidCount} / ${studentsList.length}</p></div></div></div>`;
+      }).join('')}</div></div>`;
       lucide.createIcons();
     }
-
-    function closePagoModal() {
-      document.getElementById('pagoTitleInput').value = '';
-      document.getElementById('pagoAmountInput').value = '';
-      document.getElementById('newPagoModal').classList.add('hidden');
-    }
-
+    function closePagoModal() { document.getElementById('pagoTitleInput').value = ''; document.getElementById('pagoAmountInput').value = ''; document.getElementById('newPagoModal').classList.add('hidden'); }
     function createPagoEvent() {
-      const title = document.getElementById('pagoTitleInput').value.trim();
-      const amount = document.getElementById('pagoAmountInput').value.trim();
-      
-      if (!title) return;
-
-      const pagos = getPagosData();
-      const newPago = {
-        id: Date.now(),
-        title: title,
-        amount: amount,
-        date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }),
-        records: {} // Guardará { '1. A.A.M': { auth: true, paid: false } }
-      };
-
-      // Inicializar alumnos
-      studentsList.forEach(student => {
-        newPago.records[student] = { auth: false, paid: false };
-      });
-
-      pagos.unshift(newPago);
-      savePagosData(pagos);
-      closePagoModal();
-      renderPagosSection();
+      const title = document.getElementById('pagoTitleInput').value.trim(); if (!title) return; const pagos = getPagosData();
+      const newPago = { id: Date.now(), title: title, amount: document.getElementById('pagoAmountInput').value.trim(), date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }), records: {} };
+      studentsList.forEach(s => newPago.records[s] = { auth: false, paid: false }); pagos.unshift(newPago); savePagosData(pagos); closePagoModal(); renderPagosSection();
     }
-
     function openPagoDetail(pagoId) {
-      currentPagoEventId = pagoId;
-      modalHistory.push({ type: 'pagos' }); // Para el botón volver
-      
-      const pagos = getPagosData();
-      const pago = pagos.find(p => p.id === pagoId);
-      if (!pago) return;
-
-      document.getElementById('modalTitle').innerText = 'Detalle del Evento';
-      const content = document.getElementById('modalContent');
-
-      let listHtml = `
-        <div class="space-y-4 pb-6 pt-1">
-          <div class="bg-teal-50 p-4 rounded-2xl border border-teal-100 flex justify-between items-center">
-            <div>
-              <h4 class="font-bold text-teal-900">${pago.title}</h4>
-              <p class="text-xs text-teal-700 mt-0.5">Importe: ${pago.amount || 'No especificado'}</p>
-            </div>
-            <button onclick="deletePagoEvent(${pago.id})" class="p-2 text-rose-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
-              <i data-lucide="trash-2" class="w-5 h-5"></i>
-            </button>
-          </div>
-
-          <div class="flex px-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">
-            <div class="flex-1 text-left">Alumno</div>
-            <div class="w-16">Aut.</div>
-            <div class="w-16">Pagado</div>
-          </div>
-
-          <div class="space-y-2">
-      `;
-
-      studentsList.forEach(student => {
-        const record = pago.records[student] || { auth: false, paid: false };
-        
-        listHtml += `
-          <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-            <div class="flex-1 flex items-center gap-2">
-              <div class="w-8 h-8 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">
-                ${student.split('.')[1] || student.substring(0,2)}
-              </div>
-              <span class="font-semibold text-xs text-slate-700 truncate">${student}</span>
-            </div>
-            
-            <div class="flex gap-2 shrink-0">
-              <button onclick="toggleStudentPago('${pago.id}', '${student}', 'auth')" 
-                      class="w-14 h-8 rounded-lg flex items-center justify-center transition ${record.auth ? 'bg-emerald-100 text-emerald-600 border border-emerald-200' : 'bg-slate-50 text-slate-300 border border-slate-100'}">
-                <i data-lucide="file-signature" class="w-4 h-4"></i>
-              </button>
-              
-              <button onclick="toggleStudentPago('${pago.id}', '${student}', 'paid')" 
-                      class="w-14 h-8 rounded-lg flex items-center justify-center transition ${record.paid ? 'bg-teal-100 text-teal-600 border border-teal-200' : 'bg-slate-50 text-slate-300 border border-slate-100'}">
-                <i data-lucide="coins" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-        `;
-      });
-
-      listHtml += `</div></div>`;
-      content.innerHTML = listHtml;
+      modalHistory.push({ type: 'pagos' }); const pago = getPagosData().find(p => p.id === pagoId); if (!pago) return;
+      document.getElementById('modalTitle').innerText = 'Detalle de Pago';
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6 pt-1"><div class="bg-teal-50 p-4 rounded-2xl border border-teal-100 flex justify-between items-center"><div><h4 class="font-bold text-teal-900">${pago.title}</h4></div><button onclick="deletePagoEvent(${pago.id})" class="p-2 text-rose-400"><i data-lucide="trash-2" class="w-5 h-5"></i></button></div><div class="space-y-2">${studentsList.map(s => {
+        const rec = pago.records[s] || { auth: false, paid: false };
+        return `<div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm"><span class="font-semibold text-xs text-slate-700">${s}</span><div class="flex gap-2"><button onclick="toggleStudentPago('${pago.id}', '${s}', 'auth')" class="w-14 h-8 rounded-lg flex items-center justify-center ${rec.auth ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-50 text-slate-300'}"><i data-lucide="file-signature" class="w-4 h-4"></i></button><button onclick="toggleStudentPago('${pago.id}', '${s}', 'paid')" class="w-14 h-8 rounded-lg flex items-center justify-center ${rec.paid ? 'bg-teal-100 text-teal-600' : 'bg-slate-50 text-slate-300'}"><i data-lucide="coins" class="w-4 h-4"></i></button></div></div>`;
+      }).join('')}</div></div>`;
       lucide.createIcons();
     }
+    function toggleStudentPago(pagoId, student, field) { const pagos = getPagosData(); const pIdx = pagos.findIndex(p => p.id === parseInt(pagoId)); if (pIdx !== -1) { pagos[pIdx].records[student][field] = !pagos[pIdx].records[student][field]; savePagosData(pagos); openPagoDetail(parseInt(pagoId)); } }
+    function deletePagoEvent(pagoId) { if(confirm('¿Borrar evento?')) { savePagosData(getPagosData().filter(p => p.id !== pagoId)); modalHistory.pop(); renderPagosSection(); } }
 
-    function toggleStudentPago(pagoId, student, field) {
-      const pagos = getPagosData();
-      const pagoIndex = pagos.findIndex(p => p.id === parseInt(pagoId));
-      
-      if (pagoIndex !== -1) {
-        if (!pagos[pagoIndex].records[student]) {
-          pagos[pagoIndex].records[student] = { auth: false, paid: false };
-        }
-        
-        pagos[pagoIndex].records[student][field] = !pagos[pagoIndex].records[student][field];
-        savePagosData(pagos);
-        openPagoDetail(parseInt(pagoId)); // Recargar vista
-      }
+    // --- EXTRAESCOLARES ---
+    function getExtraData() { return JSON.parse(localStorage.getItem('ratones_extraescolares') || '[]'); }
+    function saveExtraData(data) { localStorage.setItem('ratones_extraescolares', JSON.stringify(data)); }
+    function renderExtraescolaresSection() {
+      document.getElementById('modalTitle').innerText = 'Extraescolares'; const extras = getExtraData();
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6 pt-1"><button onclick="document.getElementById('newExtraModal').classList.remove('hidden')" class="w-full bg-rose-50 border border-dashed border-rose-300 text-rose-700 font-semibold py-3 rounded-2xl flex items-center justify-center gap-2 hover:bg-rose-100 transition"><i data-lucide="plus-circle" class="w-5 h-5"></i> Nueva Actividad</button><div class="space-y-3">${extras.length === 0 ? `<p class="text-xs text-slate-400 italic text-center py-4">No hay actividades creadas.</p>` : extras.map(ex => {
+        const count = Object.values(ex.students).filter(Boolean).length;
+        return `<div onclick="openExtraDetail(${ex.id})" class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:border-rose-300 transition flex justify-between items-center"><div><h4 class="font-bold text-slate-800">${ex.title}</h4><p class="text-[10px] text-slate-500 mt-0.5">${ex.schedule || 'Sin horario'} • <span class="font-bold text-rose-600">${count} inscritos</span></p></div><i data-lucide="chevron-right" class="w-5 h-5 text-slate-300"></i></div>`;
+      }).join('')}</div></div>`;
+      lucide.createIcons();
     }
-
-    function deletePagoEvent(pagoId) {
-      if(confirm('¿Seguro que quieres borrar este evento y todos sus registros?')) {
-        let pagos = getPagosData();
-        pagos = pagos.filter(p => p.id !== pagoId);
-        savePagosData(pagos);
-        
-        // Volver a la lista general
-        modalHistory.pop();
-        renderPagosSection();
-      }
+    function closeExtraModal() { document.getElementById('extraTitleInput').value = ''; document.getElementById('extraScheduleInput').value = ''; document.getElementById('newExtraModal').classList.add('hidden'); }
+    function createExtraescolar() {
+      const title = document.getElementById('extraTitleInput').value.trim(); if (!title) return; const extras = getExtraData();
+      const newEx = { id: Date.now(), title: title, schedule: document.getElementById('extraScheduleInput').value.trim(), students: {} };
+      studentsList.forEach(s => newEx.students[s] = false); extras.push(newEx); saveExtraData(extras); closeExtraModal(); renderExtraescolaresSection();
     }
+    function openExtraDetail(id) {
+      modalHistory.push({ type: 'extraescolares' }); const ex = getExtraData().find(e => e.id === id); if (!ex) return;
+      document.getElementById('modalTitle').innerText = 'Inscritos';
+      document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6 pt-1"><div class="bg-rose-50 p-4 rounded-2xl border border-rose-100 flex justify-between items-center"><div><h4 class="font-bold text-rose-900">${ex.title}</h4><p class="text-xs text-rose-700 mt-0.5">${ex.schedule || ''}</p></div><button onclick="deleteExtraescolar(${ex.id})" class="p-2 text-rose-400"><i data-lucide="trash-2" class="w-5 h-5"></i></button></div><div class="space-y-2">${studentsList.map(s => {
+        const isEnrolled = ex.students[s] || false;
+        return `<div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm"><span class="font-semibold text-xs text-slate-700">${s}</span><button onclick="toggleStudentExtra('${ex.id}', '${s}')" class="w-12 h-8 rounded-lg flex items-center justify-center transition ${isEnrolled ? 'bg-rose-100 text-rose-600 border border-rose-200' : 'bg-slate-50 text-slate-300'}"><i data-lucide="check" class="w-4 h-4"></i></button></div>`;
+      }).join('')}</div></div>`;
+      lucide.createIcons();
+    }
+    function toggleStudentExtra(id, student) { const extras = getExtraData(); const eIdx = extras.findIndex(e => e.id === parseInt(id)); if (eIdx !== -1) { extras[eIdx].students[student] = !extras[eIdx].students[student]; saveExtraData(extras); openExtraDetail(parseInt(id)); } }
+    function deleteExtraescolar(id) { if(confirm('¿Borrar actividad?')) { saveExtraData(getExtraData().filter(e => e.id !== id)); modalHistory.pop(); renderExtraescolaresSection(); } }
 
-
-    // ==================== RESTO DE MÓDULOS (Programación, Tutorías) ====================
-    // (Mantienen el código que ya funcionaba perfectamente)
-    let progCurrentDate = new Date();
-    let selectedProgDayKey = formatDateKey(new Date());
-
+    // --- PROGRAMACIÓN ---
+    let progCurrentDate = new Date(); let selectedProgDayKey = `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(new Date().getDate()).padStart(2,'0')}`;
     function getProgData() { return JSON.parse(localStorage.getItem('ratones_programacion') || '{}'); }
     function saveProgData(data) { localStorage.setItem('ratones_programacion', JSON.stringify(data)); }
-    function getStartOfWeek(d) { const date = new Date(d); const day = date.getDay(); const diff = date.getDate() - day + (day === 0 ? -6 : 1); return new Date(date.setDate(diff)); }
-
-    function renderProgramacionSection() {
-      const content = document.getElementById('modalContent');
-      content.innerHTML = `
-        <div class="space-y-4 pb-6">
-          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-            <div class="flex justify-between items-center mb-3">
-              <button onclick="changeProgWeek(-1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
-              <h4 id="progWeekRangeTitle" class="font-bold text-slate-700 capitalize text-xs"></h4>
-              <button onclick="changeProgWeek(1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
-            </div>
-            <div id="progWeekDaysGrid" class="grid grid-cols-7 gap-1 text-center"></div>
-          </div>
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <h4 id="progSelectedDayTitle" class="font-bold text-slate-800 text-xs uppercase tracking-wider border-b pb-2"></h4>
-            <div class="space-y-2">
-              <h5 class="text-xs font-bold text-slate-500 flex items-center gap-1"><i data-lucide="check-square" class="w-4 h-4 text-amber-500"></i> Tareas del Día</h5>
-              <div class="flex gap-2">
-                <input type="text" id="progTaskInput" placeholder="Ej: Ficha de trazos / Plastilina..." class="flex-1 p-2 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-500">
-                <button onclick="addProgTask()" class="bg-amber-500 text-white font-semibold px-3 py-2 rounded-xl text-xs hover:bg-amber-600 transition">+ Tarea</button>
-              </div>
-              <div id="progTaskList" class="space-y-1.5 pt-1"></div>
-            </div>
-          </div>
-        </div>
-      `;
-      renderProgWeekGrid();
-      renderProgDayDetails();
-      lucide.createIcons();
-    }
-    
-    function changeProgWeek(delta) { progCurrentDate.setDate(progCurrentDate.getDate() + (delta * 7)); renderProgWeekGrid(); }
-    function renderProgWeekGrid() {
-      const startOfWeek = getStartOfWeek(progCurrentDate);
-      const endOfWeek = new Date(startOfWeek); endOfWeek.setDate(startOfWeek.getDate() + 6);
-      const formatShort = (d) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-      document.getElementById('progWeekRangeTitle').innerText = `${formatShort(startOfWeek)} - ${formatShort(endOfWeek)}`;
-      const grid = document.getElementById('progWeekDaysGrid'); grid.innerHTML = '';
-      const dayNames = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-      const progData = getProgData();
-      for (let i = 0; i < 7; i++) {
-        const dayDate = new Date(startOfWeek); dayDate.setDate(startOfWeek.getDate() + i);
-        const dateKey = formatDateKey(dayDate);
-        const isSelected = dateKey === selectedProgDayKey;
-        const dayData = progData[dateKey] || { tasks: [] };
-        const hasContent = (dayData.tasks && dayData.tasks.length > 0);
-        let bgClass = isSelected ? 'bg-amber-500 text-white font-bold' : 'bg-white text-slate-700 hover:bg-slate-100';
-        grid.innerHTML += `<button onclick="selectProgDay('${dateKey}')" class="p-2 rounded-xl border border-slate-100 flex flex-col items-center justify-center transition ${bgClass}"><span class="text-[10px] opacity-75">${dayNames[i]}</span><span class="text-xs font-bold">${dayDate.getDate()}</span>${hasContent ? `<span class="w-1.5 h-1.5 ${isSelected ? 'bg-white' : 'bg-amber-500'} rounded-full mt-0.5"></span>` : '<span class="w-1.5 h-1.5 opacity-0 mt-0.5"></span>'}</button>`;
-      }
-    }
-    function selectProgDay(dateKey) { selectedProgDayKey = dateKey; renderProgWeekGrid(); renderProgDayDetails(); }
+    function renderProgramacionSection() { document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6"><div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200"><div class="flex justify-between items-center mb-3"><button onclick="progCurrentDate.setDate(progCurrentDate.getDate()-7); renderProgramacionSection();" class="p-1"><i data-lucide="chevron-left" class="w-5 h-5"></i></button><h4 class="font-bold text-slate-700 text-xs">Semana</h4><button onclick="progCurrentDate.setDate(progCurrentDate.getDate()+7); renderProgramacionSection();" class="p-1"><i data-lucide="chevron-right" class="w-5 h-5"></i></button></div></div><div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-4"><div class="flex gap-2"><input type="text" id="progTaskInput" placeholder="Nueva tarea..." class="flex-1 p-2 border border-slate-200 rounded-xl text-xs"><button onclick="addProgTask()" class="bg-amber-500 text-white font-semibold px-3 py-2 rounded-xl text-xs">+ Añadir</button></div><div id="progTaskList" class="space-y-1.5 pt-1"></div></div></div>`; renderProgDayDetails(); lucide.createIcons(); }
     function renderProgDayDetails() {
-      const [y, m, d] = selectedProgDayKey.split('-');
-      const dateObj = new Date(y, m - 1, d);
-      document.getElementById('progSelectedDayTitle').innerText = dateObj.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-      const progData = getProgData();
-      const dayData = progData[selectedProgDayKey] || { tasks: [] };
-      const taskList = document.getElementById('progTaskList');
-      if (!dayData.tasks || dayData.tasks.length === 0) { taskList.innerHTML = `<p class="text-xs text-slate-400 italic py-1">Sin tareas para este día.</p>`; } else {
-        taskList.innerHTML = dayData.tasks.map(t => `<div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 group"><button onclick="toggleProgTask(${t.id})" class="flex items-center gap-2 flex-1 text-left"><i data-lucide="${t.completed ? 'check-circle-2' : 'circle'}" class="w-4 h-4 ${t.completed ? 'text-emerald-500 fill-emerald-50' : 'text-slate-300'}"></i><span class="text-xs ${t.completed ? 'line-through text-slate-400' : 'text-slate-700 font-medium'}">${t.text}</span></button><button onclick="deleteProgTask(${t.id})" class="text-slate-300 hover:text-rose-500 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>`).join('');
-      }
+      const dayData = getProgData()[selectedProgDayKey] || { tasks: [] }; const taskList = document.getElementById('progTaskList');
+      if(taskList) taskList.innerHTML = dayData.tasks.length ? dayData.tasks.map(t => `<div class="flex justify-between p-2 rounded-xl bg-slate-50 border border-slate-100"><button onclick="toggleProgTask(${t.id})" class="flex items-center gap-2"><i data-lucide="${t.completed ? 'check-circle-2' : 'circle'}" class="w-4 h-4 ${t.completed ? 'text-emerald-500' : 'text-slate-300'}"></i><span class="text-xs ${t.completed ? 'line-through' : ''}">${t.text}</span></button><button onclick="deleteProgTask(${t.id})" class="text-slate-300 hover:text-rose-500 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></div>`).join('') : '<p class="text-xs text-slate-400 italic">Sin tareas.</p>';
       lucide.createIcons();
     }
-    function addProgTask() {
-      const input = document.getElementById('progTaskInput'); const text = input.value.trim(); if (!text) return;
-      const progData = getProgData();
-      if (!progData[selectedProgDayKey]) { progData[selectedProgDayKey] = { tasks: [] }; }
-      progData[selectedProgDayKey].tasks.push({ id: Date.now(), text: text, completed: false });
-      saveProgData(progData); input.value = ''; renderProgWeekGrid(); renderProgDayDetails();
-    }
-    function toggleProgTask(taskId) {
-      const progData = getProgData();
-      if (progData[selectedProgDayKey] && progData[selectedProgDayKey].tasks) {
-        progData[selectedProgDayKey].tasks = progData[selectedProgDayKey].tasks.map(t => { if (t.id === taskId) return { ...t, completed: !t.completed }; return t; });
-        saveProgData(progData); renderProgDayDetails();
-      }
-    }
-    function deleteProgTask(taskId) {
-      const progData = getProgData();
-      if (progData[selectedProgDayKey] && progData[selectedProgDayKey].tasks) {
-        progData[selectedProgDayKey].tasks = progData[selectedProgDayKey].tasks.filter(t => t.id !== taskId);
-        saveProgData(progData); renderProgWeekGrid(); renderProgDayDetails();
-      }
-    }
+    function addProgTask() { const txt = document.getElementById('progTaskInput').value.trim(); if(!txt) return; const d = getProgData(); if(!d[selectedProgDayKey]) d[selectedProgDayKey] = { tasks: [] }; d[selectedProgDayKey].tasks.push({ id: Date.now(), text: txt, completed: false }); saveProgData(d); document.getElementById('progTaskInput').value = ''; renderProgDayDetails(); }
+    function toggleProgTask(id) { const d = getProgData(); if(d[selectedProgDayKey]){ d[selectedProgDayKey].tasks = d[selectedProgDayKey].tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t); saveProgData(d); renderProgDayDetails(); } }
+    function deleteProgTask(id) { const d = getProgData(); if(d[selectedProgDayKey]){ d[selectedProgDayKey].tasks = d[selectedProgDayKey].tasks.filter(t => t.id !== id); saveProgData(d); renderProgDayDetails(); } }
 
-    // Tutorias (resumido para mantener funcionalidad base)
-    let tutoriaDate = new Date(); let selectedTutoriaDayKey = formatDateKey(new Date()); let activeTutoriaId = null;
-    function formatDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+    // --- TUTORÍAS ---
+    let selectedTutoriaDayKey = selectedProgDayKey; let activeTutoriaId = null;
     function getTutorias() { return JSON.parse(localStorage.getItem('ratones_tutorias') || '[]'); }
     function saveTutorias(data) { localStorage.setItem('ratones_tutorias', JSON.stringify(data)); }
-    function renderTutoriasSection() {
-      const content = document.getElementById('modalContent');
-      content.innerHTML = `<div class="space-y-4 pb-6"><div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200"><div class="flex justify-between items-center mb-3"><button onclick="changeTutoriaMonth(-1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-left" class="w-5 h-5"></i></button><h4 id="tutoriaCalendarMonth" class="font-bold text-slate-700 capitalize text-sm"></h4><button onclick="changeTutoriaMonth(1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-right" class="w-5 h-5"></i></button></div><div class="grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400 mb-2"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div><div id="tutoriaCalendarDays" class="grid grid-cols-7 gap-1 text-center text-xs font-medium"></div></div><div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3"><h4 id="selectedDayTitle" class="font-bold text-slate-800 text-xs uppercase tracking-wider"></h4><div class="flex gap-2"><input type="text" id="tutoriaTitleInput" placeholder="Ej: Familia Adriana" class="flex-1 p-2 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-purple-500"><button onclick="addTutoriaCita()" class="bg-purple-600 text-white font-semibold px-3 py-2 rounded-xl text-xs hover:bg-purple-700 transition">+ Añadir</button></div><div id="dayCitasList" class="space-y-2 pt-1"></div></div></div>`;
-      renderTutoriaCalendarGrid(); renderDayCitas(); lucide.createIcons();
-    }
-    function changeTutoriaMonth(delta) { tutoriaDate.setMonth(tutoriaDate.getMonth() + delta); renderTutoriaCalendarGrid(); }
-    function renderTutoriaCalendarGrid() {
-      document.getElementById('tutoriaCalendarMonth').innerText = tutoriaDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-      const year = tutoriaDate.getFullYear(); const month = tutoriaDate.getMonth();
-      const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const grid = document.getElementById('tutoriaCalendarDays'); grid.innerHTML = '';
-      let startOffset = (firstDay === 0 ? 6 : firstDay - 1); for (let i = 0; i < startOffset; i++) { grid.innerHTML += `<div></div>`; }
-      const allTutorias = getTutorias();
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateKey = formatDateKey(new Date(year, month, day));
-        const isSelected = dateKey === selectedTutoriaDayKey; const hasCitas = allTutorias.some(t => t.dateKey === dateKey);
-        let bgClass = isSelected ? 'bg-purple-600 text-white font-bold' : 'bg-white text-slate-700 hover:bg-slate-100';
-        grid.innerHTML += `<button onclick="selectTutoriaDay('${dateKey}')" class="p-2 rounded-xl border border-slate-100 relative flex flex-col items-center justify-center transition ${bgClass}"><span>${day}</span>${hasCitas ? `<span class="w-1.5 h-1.5 ${isSelected ? 'bg-white' : 'bg-purple-600'} rounded-full mt-0.5"></span>` : ''}</button>`;
-      }
-    }
-    function selectTutoriaDay(dateKey) { selectedTutoriaDayKey = dateKey; renderTutoriaCalendarGrid(); renderDayCitas(); }
-    function renderDayCitas() {
-      const [y, m, d] = selectedTutoriaDayKey.split('-');
-      document.getElementById('selectedDayTitle').innerText = `Citas: ${new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}`;
-      const allTutorias = getTutorias(); const dayCitas = allTutorias.filter(t => t.dateKey === selectedTutoriaDayKey);
-      const container = document.getElementById('dayCitasList');
-      if (dayCitas.length === 0) { container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-2">No hay tutorías citadas para este día.</p>`; return; }
-      container.innerHTML = dayCitas.map(c => `<div onclick="openTutoriaDetailModal(${c.id})" class="p-3 bg-purple-50 border border-purple-100 rounded-xl flex justify-between items-center cursor-pointer hover:bg-purple-100 transition"><div><p class="font-bold text-xs text-purple-900">${c.title}</p><p class="text-[10px] text-purple-600 truncate max-w-[200px]">${c.notes || 'Sin notas activas...'}</p></div><i data-lucide="chevron-right" class="w-4 h-4 text-purple-400"></i></div>`).join('');
-      lucide.createIcons();
-    }
-    function addTutoriaCita() {
-      const title = document.getElementById('tutoriaTitleInput').value.trim(); if (!title) return;
-      const tutorias = getTutorias(); tutorias.push({ id: Date.now(), dateKey: selectedTutoriaDayKey, title: title, notes: '' });
-      saveTutorias(tutorias); document.getElementById('tutoriaTitleInput').value = ''; renderTutoriaCalendarGrid(); renderDayCitas();
-    }
-    function openTutoriaDetailModal(id) {
-      activeTutoriaId = id; const tutorias = getTutorias(); const item = tutorias.find(t => t.id === id); if (!item) return;
-      document.getElementById('tutoriaModalTitle').innerText = item.title; document.getElementById('tutoriaModalDate').innerText = item.dateKey;
-      document.getElementById('tutoriaModalNotes').value = item.notes || ''; document.getElementById('tutoriaDetailModal').classList.remove('hidden');
-    }
+    function renderTutoriasSection() { document.getElementById('modalContent').innerHTML = `<div class="space-y-4 pb-6"><div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm"><div class="flex gap-2"><input type="text" id="tutoriaTitleInput" placeholder="Ej: Familia Adriana" class="flex-1 p-2 border border-slate-200 rounded-xl text-xs"><button onclick="addTutoriaCita()" class="bg-purple-600 text-white font-semibold px-3 py-2 rounded-xl text-xs">+ Añadir</button></div><div id="dayCitasList" class="space-y-2 pt-2"></div></div></div>`; renderDayCitas(); }
+    function renderDayCitas() { const citas = getTutorias().filter(t => t.dateKey === selectedTutoriaDayKey); const c = document.getElementById('dayCitasList'); if(c) c.innerHTML = citas.length ? citas.map(t => `<div onclick="openTutoriaDetailModal(${t.id})" class="p-3 bg-purple-50 border border-purple-100 rounded-xl flex justify-between cursor-pointer"><div><p class="font-bold text-xs text-purple-900">${t.title}</p></div><i data-lucide="chevron-right" class="w-4 h-4 text-purple-400"></i></div>`).join('') : '<p class="text-xs text-slate-400 italic">No hay citas.</p>'; lucide.createIcons(); }
+    function addTutoriaCita() { const txt = document.getElementById('tutoriaTitleInput').value.trim(); if(!txt) return; const t = getTutorias(); t.push({ id: Date.now(), dateKey: selectedTutoriaDayKey, title: txt, notes: '' }); saveTutorias(t); renderDayCitas(); }
+    function openTutoriaDetailModal(id) { activeTutoriaId = id; const t = getTutorias().find(x => x.id === id); if(!t) return; document.getElementById('tutoriaModalTitle').innerText = t.title; document.getElementById('tutoriaModalNotes').value = t.notes || ''; document.getElementById('tutoriaDetailModal').classList.remove('hidden'); }
     function closeTutoriaDetailModal() { document.getElementById('tutoriaDetailModal').classList.add('hidden'); }
-    function saveTutoriaNotes() {
-      if (!activeTutoriaId) return; const tutorias = getTutorias(); const item = tutorias.find(t => t.id === activeTutoriaId);
-      if (item) { item.notes = document.getElementById('tutoriaModalNotes').value; saveTutorias(tutorias); }
-      closeTutoriaDetailModal(); renderDayCitas();
-    }
-    function deleteTutoria() {
-      if (!activeTutoriaId) return; let tutorias = getTutorias(); tutorias = tutorias.filter(t => t.id !== activeTutoriaId);
-      saveTutorias(tutorias); closeTutoriaDetailModal(); renderTutoriaCalendarGrid(); renderDayCitas();
-    }
+    function saveTutoriaNotes() { const ts = getTutorias(); const t = ts.find(x => x.id === activeTutoriaId); if(t) { t.notes = document.getElementById('tutoriaModalNotes').value; saveTutorias(ts); closeTutoriaDetailModal(); renderDayCitas(); } }
+    function deleteTutoria() { saveTutorias(getTutorias().filter(t => t.id !== activeTutoriaId)); closeTutoriaDetailModal(); renderDayCitas(); }
   </script>
-
 </body>
 </html>
