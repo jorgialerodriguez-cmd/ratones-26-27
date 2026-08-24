@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel Principal</title>
+  <title>Página Principal</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,33 +13,33 @@
     }
 
     body {
-      background-color: #f4f6f9;
+      background-color: #f8fafc;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 20px;
     }
 
     .dashboard-container {
       background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      max-width: 600px;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      max-width: 900px;
       width: 100%;
       text-align: center;
     }
 
     .dashboard-title {
-      margin-bottom: 24px;
-      color: #1e293b;
-      font-size: 1.5rem;
+      margin-bottom: 28px;
+      color: #0f172a;
+      font-size: 1.75rem;
     }
 
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
     }
 
@@ -48,9 +48,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 22px 15px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       color: #ffffff;
       font-size: 1rem;
       font-weight: 600;
@@ -59,66 +59,73 @@
     }
 
     .btn-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
     }
 
     .btn-card .icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
     }
 
-    /* Estilos específicos */
-    .btn-extraescolares {
-      background-color: #10b981; /* Verde dinámico */
-    }
-
-    .btn-pagos {
-      background-color: #2563eb; /* Azul corporativo */
-    }
-
-    .btn-evaluacion {
-      background-color: #94a3b8; /* Gris neutro (pausado) */
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .btn-evaluacion:hover {
-      transform: none;
-      box-shadow: none;
-    }
+    /* Colores para cada sección */
+    .btn-calendario   { background-color: #2563eb; }
+    .btn-alumnos      { background-color: #0284c7; }
+    .btn-evaluacion   { background-color: #7c3aed; }
+    .btn-tutorias     { background-color: #db2777; }
+    .btn-programacion { background-color: #d97706; }
+    .btn-extraes      { background-color: #10b981; } /* Nuevo */
+    .btn-pagos        { background-color: #0f172a; } /* Nuevo */
   </style>
 </head>
 <body>
 
   <div class="dashboard-container">
-    <h1 class="dashboard-title">Panel Principal</h1>
+    <h1 class="dashboard-title">Página Principal</h1>
     
     <div class="dashboard-grid">
-      <!-- Botón Extraescolares -->
-      <button class="btn-card btn-extraescolares" onclick="navegar('/extraescolares')">
+      <!-- Botones Originales -->
+      <button class="btn-card btn-calendario" onclick="navegar('/calendario')">
+        <span class="icon">📅</span>
+        <span>Calendario</span>
+      </button>
+
+      <button class="btn-card btn-alumnos" onclick="navegar('/alumnos')">
+        <span class="icon">👨‍🎓</span>
+        <span>Alumnos</span>
+      </button>
+
+      <button class="btn-card btn-evaluacion" onclick="navegar('/evaluacion')">
+        <span class="icon">📊</span>
+        <span>Evaluación</span>
+      </button>
+
+      <button class="btn-card btn-tutorias" onclick="navegar('/tutorias')">
+        <span class="icon">💬</span>
+        <span>Tutorías</span>
+      </button>
+
+      <button class="btn-card btn-programacion" onclick="navegar('/programacion')">
+        <span class="icon">📚</span>
+        <span>Programación</span>
+      </button>
+
+      <!-- Botones Nuevos -->
+      <button class="btn-card btn-extraes" onclick="navegar('/extraescolares')">
         <span class="icon">⚽</span>
         <span>Extraescolares</span>
       </button>
 
-      <!-- Botón Pagos -->
       <button class="btn-card btn-pagos" onclick="navegar('/pagos')">
         <span class="icon">💳</span>
         <span>Pagos</span>
-      </button>
-
-      <!-- Botón Evaluación (Pausado temporalmente) -->
-      <button class="btn-card btn-evaluacion" title="Módulo pendiente" disabled>
-        <span class="icon">📊</span>
-        <span>Evaluación</span>
       </button>
     </div>
   </div>
 
   <script>
     function navegar(ruta) {
-      // Sustituir por la URL o ruta real de tu servidor
-      console.log('Redirigiendo a:', ruta);
+      console.label = 'Redirigiendo a: ' + ruta;
       window.location.href = ruta;
     }
   </script>
