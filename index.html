@@ -3,130 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página Principal</title>
+  <title>Plataforma Docente</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    
+    .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 700px; text-align: center; }
+    .hidden { display: none !important; }
 
-    body {
-      background-color: #f8fafc;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+    /* Estilos Login */
+    .form-group { margin-bottom: 1.2rem; text-align: left; }
+    .form-group label { display: block; margin-bottom: .4rem; font-weight: 600; color: #334155; }
+    .form-group input { width: 100%; padding: .75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+    .btn-login { background: #2563eb; color: white; border: none; padding: .8rem; border-radius: 6px; font-size: 1rem; font-weight: bold; width: 100%; cursor: pointer; margin-top: 1rem; }
 
-    .dashboard-container {
-      background: #ffffff;
-      padding: 35px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-    }
+    /* Estilos Panel Principal */
+    .grid-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .btn-modulo { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+    .btn-modulo:hover { transform: translateY(-3px); }
+    .btn-modulo .icon { font-size: 2rem; margin-bottom: .5rem; }
 
-    .dashboard-title {
-      margin-bottom: 28px;
-      color: #0f172a;
-      font-size: 1.75rem;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .btn-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 22px 15px;
-      border: none;
-      border-radius: 12px;
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-    }
-
-    .btn-card .icon {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-
-    /* Colores para cada sección */
-    .btn-calendario   { background-color: #2563eb; }
-    .btn-alumnos      { background-color: #0284c7; }
-    .btn-evaluacion   { background-color: #7c3aed; }
-    .btn-tutorias     { background-color: #db2777; }
-    .btn-programacion { background-color: #d97706; }
-    .btn-extraes      { background-color: #10b981; } /* Nuevo */
-    .btn-pagos        { background-color: #0f172a; } /* Nuevo */
+    /* Colores por botón */
+    .bg-alumnos      { background-color: #0284c7; }
+    .bg-evaluacion   { background-color: #7c3aed; }
+    .bg-tutorias     { background-color: #db2777; }
+    .bg-programacion { background-color: #d97706; }
+    .bg-extraes      { background-color: #10b981; } /* Nuevo */
+    .bg-pagos        { background-color: #0f172a; } /* Nuevo */
   </style>
 </head>
 <body>
 
-  <div class="dashboard-container">
-    <h1 class="dashboard-title">Página Principal</h1>
+  <!-- PANTALLA 1: PERFIL DE PROFESORA (LOGIN) -->
+  <div id="pantalla-login" class="card">
+    <h2 style="margin-bottom: .5rem; color: #0f172a;">Perfil de Profesora</h2>
+    <p style="margin-bottom: 1.5rem; color: #64748b;">Ingresa tu usuario y contraseña</p>
     
-    <div class="dashboard-grid">
+    <form onsubmit="ingresar(event)">
+      <div class="form-group">
+        <label>Usuario / Email</label>
+        <input type="text" placeholder="profesora@colegio.com" required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-login">Inicia Sesión</button>
+    </form>
+  </div>
+
+  <!-- PANTALLA 2: PÁGINA PRINCIPAL (DASHBOARD) -->
+  <div id="pantalla-principal" class="card hidden">
+    <h2 style="color: #0f172a; margin-bottom: 1.5rem;">Página Principal</h2>
+    
+    <div class="grid-dashboard">
       <!-- Botones Originales -->
-      <button class="btn-card btn-calendario" onclick="navegar('/calendario')">
-        <span class="icon">📅</span>
-        <span>Calendario</span>
+      <button class="btn-modulo bg-alumnos" onclick="navegar('/alumnos')">
+        <span class="icon">👨‍🎓</span><span>Alumnos</span>
       </button>
 
-      <button class="btn-card btn-alumnos" onclick="navegar('/alumnos')">
-        <span class="icon">👨‍🎓</span>
-        <span>Alumnos</span>
+      <button class="btn-modulo bg-evaluacion" onclick="navegar('/evaluacion')">
+        <span class="icon">📊</span><span>Evaluación</span>
       </button>
 
-      <button class="btn-card btn-evaluacion" onclick="navegar('/evaluacion')">
-        <span class="icon">📊</span>
-        <span>Evaluación</span>
+      <button class="btn-modulo bg-tutorias" onclick="navegar('/tutorias')">
+        <span class="icon">💬</span><span>Tutorías</span>
       </button>
 
-      <button class="btn-card btn-tutorias" onclick="navegar('/tutorias')">
-        <span class="icon">💬</span>
-        <span>Tutorías</span>
-      </button>
-
-      <button class="btn-card btn-programacion" onclick="navegar('/programacion')">
-        <span class="icon">📚</span>
-        <span>Programación</span>
+      <button class="btn-modulo bg-programacion" onclick="navegar('/programacion')">
+        <span class="icon">📚</span><span>Programación</span>
       </button>
 
       <!-- Botones Nuevos -->
-      <button class="btn-card btn-extraes" onclick="navegar('/extraescolares')">
-        <span class="icon">⚽</span>
-        <span>Extraescolares</span>
+      <button class="btn-modulo bg-extraes" onclick="navegar('/extraescolares')">
+        <span class="icon">⚽</span><span>Extraescolares</span>
       </button>
 
-      <button class="btn-card btn-pagos" onclick="navegar('/pagos')">
-        <span class="icon">💳</span>
-        <span>Pagos</span>
+      <button class="btn-modulo bg-pagos" onclick="navegar('/pagos')">
+        <span class="icon">💳</span><span>Pagos</span>
       </button>
     </div>
   </div>
 
   <script>
+    function ingresar(event) {
+      event.preventDefault(); // Evita recargar la página
+      document.getElementById('pantalla-login').classList.add('hidden');
+      document.getElementById('pantalla-principal').classList.remove('hidden');
+    }
+
     function navegar(ruta) {
-      console.label = 'Redirigiendo a: ' + ruta;
-      window.location.href = ruta;
+      console.log('Navegando a:', ruta);
+      // Aquí colocas la redirección real cuando la conectes a tu servidor:
+      // window.location.href = ruta;
     }
   </script>
 
