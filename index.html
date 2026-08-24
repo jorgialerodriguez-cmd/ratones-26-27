@@ -64,7 +64,7 @@
       <div id="calendarDays" class="grid grid-cols-7 gap-1 text-center text-sm font-medium flex-1 items-center"></div>
     </section>
 
-    <!-- Menú de Botones Cuadrados (Se han añadido Extraescolares y Pagos) -->
+    <!-- Menú de Botones Cuadrados -->
     <footer class="grid grid-cols-2 gap-3 pt-1">
       <button onclick="openSection('Alumnos')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
         <div class="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition">
@@ -94,7 +94,6 @@
         <span class="font-semibold text-sm text-slate-700">Programación</span>
       </button>
 
-      <!-- Botón Nuevo 1: Extraescolares -->
       <button onclick="openSection('Extraescolares')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
         <div class="p-3 bg-rose-50 text-rose-600 rounded-xl group-hover:scale-110 transition">
           <i data-lucide="sparkles" class="w-6 h-6"></i>
@@ -102,7 +101,6 @@
         <span class="font-semibold text-sm text-slate-700">Extraescolares</span>
       </button>
 
-      <!-- Botón Nuevo 2: Pagos -->
       <button onclick="openSection('Pagos')" class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-2 hover:border-indigo-300 hover:shadow-md active:scale-95 transition group">
         <div class="p-3 bg-teal-50 text-teal-600 rounded-xl group-hover:scale-110 transition">
           <i data-lucide="credit-card" class="w-6 h-6"></i>
@@ -115,7 +113,7 @@
   <!-- ==================== VISTA MODAL / SECCIÓN ABIERTA ==================== -->
   <div id="sectionModal" class="hidden absolute inset-0 bg-white z-40 flex flex-col p-4 overflow-hidden">
     <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3 shrink-0">
-      <button onclick="closeSection()" class="flex items-center text-sm font-semibold text-slate-500 hover:text-indigo-600">
+      <button id="modalBackBtn" onclick="handleModalBack()" class="flex items-center text-sm font-semibold text-slate-500 hover:text-indigo-600">
         <i data-lucide="arrow-left" class="w-5 h-5 mr-1"></i> Volver
       </button>
       <h3 id="modalTitle" class="font-bold text-lg text-slate-800"></h3>
@@ -124,15 +122,15 @@
     <div id="modalContent" class="flex-1 overflow-y-auto"></div>
   </div>
 
-  <!-- Modal para Subir Foto de Alumno -->
+  <!-- ==================== MODAL SUBIR FOTO DEL ALUMNO ==================== -->
   <div id="uploadModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end justify-center p-4">
     <div class="bg-white w-full rounded-2xl p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center pb-2 border-b">
-        <h4 id="uploadCategoryTitle" class="font-bold text-slate-800 text-sm"></h4>
+        <h4 id="uploadCategoryTitle" class="font-bold text-slate-800 text-sm">Añadir Evidencia / Foto</h4>
         <button onclick="closeUploadModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <input type="file" id="photoInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
-      <textarea id="photoComment" placeholder="Escribe un comentario sobre esta imagen..." class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
+      <textarea id="photoComment" placeholder="Escribe un comentario sobre esta foto o actividad..." class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-20 resize-none"></textarea>
       <button onclick="processAndSavePhoto()" class="w-full bg-indigo-600 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-indigo-700 transition">Guardar en Galería</button>
     </div>
   </div>
@@ -170,8 +168,17 @@
       "13. L.P.N", "14. V.R.M", "15. H.R.M", "16. H.S.A", "17. M.S.M", "18. A.V.P"
     ];
 
+    const studentCategories = [
+      { id: 'lecto', name: 'Lectoescritura', icon: 'pen-tool', color: 'indigo' },
+      { id: 'mates', name: 'Lógico-matemática', icon: 'shapes', color: 'emerald' },
+      { id: 'proyecto', name: 'Proyecto', icon: 'palette', color: 'amber' },
+      { id: 'patio', name: 'Patio', icon: 'sun', color: 'rose' },
+      { id: 'comedor', name: 'Comedor', icon: 'utensils', color: 'teal' }
+    ];
+
     let currentStudent = '';
-    let selectedCategory = '';
+    let selectedCategory = null;
+    let modalHistory = [];
 
     function getPassword() { return localStorage.getItem('ratones_pwd') || '1234'; }
 
@@ -236,7 +243,19 @@
     }
 
     // --- NAVEGACIÓN GENERAL ---
-    function openSection(name) {
+    function handleModalBack() {
+      if (modalHistory.length > 1) {
+        modalHistory.pop();
+        const prev = modalHistory[modalHistory.length - 1];
+        if (prev.type === 'section') openSection(prev.name, false);
+        else if (prev.type === 'student') openStudentDetail(prev.student, false);
+      } else {
+        closeSection();
+      }
+    }
+
+    function openSection(name, pushHistory = true) {
+      if (pushHistory) modalHistory = [{ type: 'section', name: name }];
       document.getElementById('modalTitle').innerText = name;
       const content = document.getElementById('modalContent');
 
@@ -284,26 +303,218 @@
     }
 
     function closeSection() {
+      modalHistory = [];
       document.getElementById('sectionModal').classList.add('hidden');
     }
 
-    function openStudentDetail(student) {
+    // ==================== MÓDULO DE ALUMNOS (DETALLADO) ====================
+    function getStudentStorage() {
+      return JSON.parse(localStorage.getItem('ratones_alumnos_data') || '{}');
+    }
+
+    function saveStudentStorage(data) {
+      localStorage.setItem('ratones_alumnos_data', JSON.stringify(data));
+    }
+
+    function openStudentDetail(student, pushHistory = true) {
       currentStudent = student;
+      if (pushHistory) modalHistory.push({ type: 'student', student: student });
+      
       document.getElementById('modalTitle').innerText = student;
-      document.getElementById('modalContent').innerHTML = `
-        <div class="space-y-4 pt-2 text-center">
-          <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-2xl mx-auto shadow-sm">
-            ${student.split('.')[1] || student.substring(0,2)}
+      const content = document.getElementById('modalContent');
+
+      content.innerHTML = `
+        <div class="space-y-4 pt-1">
+          <!-- Cabecera del alumno -->
+          <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-lg">
+              ${student.split('.')[1] || student.substring(0,2)}
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-800">${student}</h4>
+              <p class="text-[11px] text-slate-400">Áreas de seguimiento y evidencias</p>
+            </div>
           </div>
-          <h4 class="font-bold text-slate-800">${student}</h4>
-          <p class="text-xs text-slate-400">Expediente y galería del alumno</p>
+
+          <!-- Botones de las 5 Áreas -->
+          <div class="space-y-2">
+            ${studentCategories.map(cat => `
+              <button onclick="openStudentCategory('${cat.id}')" class="w-full bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:bg-slate-50 flex items-center justify-between shadow-sm active:scale-98 transition group">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 bg-${cat.color}-50 text-${cat.color}-600 rounded-xl group-hover:scale-110 transition">
+                    <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+                  </div>
+                  <span class="font-bold text-sm text-slate-700">${cat.name}</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i>
+              </button>
+            `).join('')}
+          </div>
         </div>
       `;
       document.getElementById('sectionModal').classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
-    function processAndSavePhoto() { closeUploadModal(); }
+    function openStudentCategory(catId) {
+      const category = studentCategories.find(c => c.id === catId);
+      selectedCategory = category;
+      modalHistory.push({ type: 'studentCategory', catId: catId });
+
+      document.getElementById('modalTitle').innerText = category.name;
+      renderStudentCategoryView();
+    }
+
+    function renderStudentCategoryView() {
+      const allData = getStudentStorage();
+      const studentData = (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) || { notes: '', photos: [] };
+      const content = document.getElementById('modalContent');
+
+      content.innerHTML = `
+        <div class="space-y-4 pb-6">
+          <div class="bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-center">
+            <span class="text-xs font-semibold text-indigo-700">Alumno: ${currentStudent}</span>
+          </div>
+
+          <!-- Bloc de Notas de la Categoría -->
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex justify-between items-center">
+              <h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-4 h-4 text-indigo-500"></i> Bloc de Notas
+              </h5>
+              <span id="savedIndicator" class="text-[10px] text-slate-400 italic">Guardado automático</span>
+            </div>
+            <textarea id="catNotesInput" oninput="autoSaveCategoryNotes()" placeholder="Escribe aquí observaciones, progresos o comentarios sobre ${selectedCategory.name}..." 
+                      class="w-full p-3 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-indigo-500 outline-none h-28 resize-none">${studentData.notes || ''}</textarea>
+          </div>
+
+          <!-- Galería de Fotos del Alumno en esta Categoría -->
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <div class="flex justify-between items-center">
+              <h5 class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
+                <i data-lucide="image" class="w-4 h-4 text-indigo-500"></i> Galería y Comentarios
+              </h5>
+              <button onclick="openUploadModal()" class="cursor-pointer bg-indigo-50 text-indigo-700 font-semibold px-2.5 py-1 rounded-lg text-[11px] border border-indigo-200 hover:bg-indigo-100 transition flex items-center gap-1">
+                <i data-lucide="camera" class="w-3.5 h-3.5"></i> + Subir Foto
+              </button>
+            </div>
+
+            <div id="studentPhotoList" class="space-y-3 pt-1">
+              ${(!studentData.photos || studentData.photos.length === 0) 
+                ? `<p class="text-xs text-slate-400 italic text-center py-4">No hay fotos ni comentarios registrados todavía.</p>`
+                : studentData.photos.map(p => `
+                  <div class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                    <div class="relative rounded-lg overflow-hidden max-h-48 border border-slate-100">
+                      <img src="${p.image}" class="w-full h-auto object-contain bg-slate-900/5">
+                      <button onclick="deleteStudentPhoto(${p.id})" class="absolute top-2 right-2 bg-slate-900/60 text-white p-1.5 rounded-lg hover:bg-rose-600 transition">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                      </button>
+                    </div>
+                    <div class="px-1">
+                      <p class="text-xs text-slate-700 font-medium">${p.comment || '<span class="italic text-slate-400">Sin comentario</span>'}</p>
+                      <span class="text-[10px] text-slate-400 mt-1 block">${p.date || ''}</span>
+                    </div>
+                  </div>
+                `).join('')
+              }
+            </div>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    function autoSaveCategoryNotes() {
+      const notes = document.getElementById('catNotesInput').value;
+      const allData = getStudentStorage();
+      
+      if (!allData[currentStudent]) allData[currentStudent] = {};
+      if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
+      
+      allData[currentStudent][selectedCategory.id].notes = notes;
+      saveStudentStorage(allData);
+
+      const indicator = document.getElementById('savedIndicator');
+      if (indicator) {
+        indicator.innerText = 'Guardado ✓';
+        indicator.classList.add('text-emerald-500');
+        setTimeout(() => {
+          indicator.innerText = 'Guardado automático';
+          indicator.classList.remove('text-emerald-500');
+        }, 1500);
+      }
+    }
+
+    function openUploadModal() {
+      document.getElementById('uploadCategoryTitle').innerText = `${selectedCategory.name} - ${currentStudent}`;
+      document.getElementById('photoInput').value = '';
+      document.getElementById('photoComment').value = '';
+      document.getElementById('uploadModal').classList.remove('hidden');
+    }
+
+    function closeUploadModal() { 
+      document.getElementById('uploadModal').classList.add('hidden'); 
+    }
+
+    function processAndSavePhoto() {
+      const fileInput = document.getElementById('photoInput');
+      const comment = document.getElementById('photoComment').value.trim();
+      const file = fileInput.files[0];
+      
+      if (!file) {
+        alert('Por favor selecciona una imagen.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 600;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height && width > maxDim) { height *= maxDim / width; width = maxDim; } 
+          else if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+          const allData = getStudentStorage();
+          if (!allData[currentStudent]) allData[currentStudent] = {};
+          if (!allData[currentStudent][selectedCategory.id]) allData[currentStudent][selectedCategory.id] = { notes: '', photos: [] };
+
+          const dateStr = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+          allData[currentStudent][selectedCategory.id].photos.unshift({
+            id: Date.now(),
+            image: compressedBase64,
+            comment: comment,
+            date: dateStr
+          });
+
+          saveStudentStorage(allData);
+          closeUploadModal();
+          renderStudentCategoryView();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function deleteStudentPhoto(photoId) {
+      const allData = getStudentStorage();
+      if (allData[currentStudent] && allData[currentStudent][selectedCategory.id]) {
+        allData[currentStudent][selectedCategory.id].photos = allData[currentStudent][selectedCategory.id].photos.filter(p => p.id !== photoId);
+        saveStudentStorage(allData);
+        renderStudentCategoryView();
+      }
+    }
 
     // ==================== MÓDULO DE PROGRAMACIÓN (SEMANAL) ====================
     let progCurrentDate = new Date();
@@ -328,23 +539,18 @@
       const content = document.getElementById('modalContent');
       content.innerHTML = `
         <div class="space-y-4 pb-6">
-          
-          <!-- Calendario Semanal -->
           <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
             <div class="flex justify-between items-center mb-3">
               <button onclick="changeProgWeek(-1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
               <h4 id="progWeekRangeTitle" class="font-bold text-slate-700 capitalize text-xs"></h4>
               <button onclick="changeProgWeek(1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
             </div>
-
             <div id="progWeekDaysGrid" class="grid grid-cols-7 gap-1 text-center"></div>
           </div>
 
-          <!-- Gestor de Tareas y Fotos para el Día Seleccionado -->
           <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <h4 id="progSelectedDayTitle" class="font-bold text-slate-800 text-xs uppercase tracking-wider border-b pb-2"></h4>
             
-            <!-- Crear nueva tarea -->
             <div class="space-y-2">
               <h5 class="text-xs font-bold text-slate-500 flex items-center gap-1"><i data-lucide="check-square" class="w-4 h-4 text-amber-500"></i> Tareas del Día</h5>
               <div class="flex gap-2">
@@ -353,11 +559,9 @@
                   + Tarea
                 </button>
               </div>
-              <!-- Lista de tareas -->
               <div id="progTaskList" class="space-y-1.5 pt-1"></div>
             </div>
 
-            <!-- Subir foto del día -->
             <div class="space-y-2 pt-2 border-t">
               <div class="flex justify-between items-center">
                 <h5 class="text-xs font-bold text-slate-500 flex items-center gap-1"><i data-lucide="image" class="w-4 h-4 text-amber-500"></i> Evidencias / Fotos</h5>
@@ -366,13 +570,9 @@
                 </label>
                 <input type="file" id="progPhotoInput" accept="image/*" class="hidden" onchange="uploadProgPhoto(event)">
               </div>
-              
-              <!-- Galería de fotos del día -->
               <div id="progPhotoGrid" class="grid grid-cols-3 gap-2 pt-1"></div>
             </div>
-
           </div>
-
         </div>
       `;
 
@@ -436,7 +636,6 @@
       const progData = getProgData();
       const dayData = progData[selectedProgDayKey] || { tasks: [], photos: [] };
 
-      // Render Tareas
       const taskList = document.getElementById('progTaskList');
       if (!dayData.tasks || dayData.tasks.length === 0) {
         taskList.innerHTML = `<p class="text-xs text-slate-400 italic py-1">Sin tareas para este día.</p>`;
@@ -454,7 +653,6 @@
         `).join('');
       }
 
-      // Render Fotos
       const photoGrid = document.getElementById('progPhotoGrid');
       if (!dayData.photos || dayData.photos.length === 0) {
         photoGrid.innerHTML = `<p class="col-span-3 text-xs text-slate-400 italic py-1">Sin fotos asignadas a este día.</p>`;
@@ -595,27 +793,21 @@
       const content = document.getElementById('modalContent');
       content.innerHTML = `
         <div class="space-y-4 pb-6">
-          
-          <!-- Calendario de Tutorías -->
           <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
             <div class="flex justify-between items-center mb-3">
               <button onclick="changeTutoriaMonth(-1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
               <h4 id="tutoriaCalendarMonth" class="font-bold text-slate-700 capitalize text-sm"></h4>
               <button onclick="changeTutoriaMonth(1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-600"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
             </div>
-
             <div class="grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400 mb-2">
               <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
             </div>
-
             <div id="tutoriaCalendarDays" class="grid grid-cols-7 gap-1 text-center text-xs font-medium"></div>
           </div>
 
-          <!-- Gestor de Citas para el Día Seleccionado -->
           <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
             <h4 id="selectedDayTitle" class="font-bold text-slate-800 text-xs uppercase tracking-wider"></h4>
             
-            <!-- Crear nueva cita -->
             <div class="flex gap-2">
               <input type="text" id="tutoriaTitleInput" placeholder="Ej: Familia Adriana" class="flex-1 p-2 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-purple-500">
               <button onclick="addTutoriaCita()" class="bg-purple-600 text-white font-semibold px-3 py-2 rounded-xl text-xs hover:bg-purple-700 transition">
@@ -623,10 +815,8 @@
               </button>
             </div>
 
-            <!-- Lista de Citas del Día -->
             <div id="dayCitasList" class="space-y-2 pt-1"></div>
           </div>
-
         </div>
       `;
 
