@@ -26,7 +26,7 @@
               class="w-full bg-white text-indigo-600 font-semibold py-3 rounded-xl shadow-lg hover:bg-indigo-50 active:scale-95 transition">
         Entrar
       </button>
-      <p id="errorMsg" class="text-xs text-rose-300 text-center hidden font-medium">Contraseña incorrecta. Prueba con 1234</p>
+      <p id="errorMsg" class="text-xs text-rose-300 text-center hidden font-medium">Contraseña incorrecta.</p>
     </div>
   </div>
 
@@ -109,25 +109,51 @@
       <div class="w-5"></div>
     </div>
     <div id="modalContent" class="flex-1 overflow-y-auto">
-      <!-- El contenido específico de cada sección irá cargándose aquí -->
+      <!-- Contenido dinámico -->
     </div>
   </div>
 
   <script>
-    // Inicializar iconos
     lucide.createIcons();
 
-    // Contraseña por defecto (puedes cambiarla aquí)
-    const SECRET = "1234";
+    // Lista de tus 18 alumnos
+    const studentsList = [
+      "1. A.A.M", "2. A.A.H", "3. G.B.C", "4. D.B.C", "5. T.G.E", "6. E.G.S",
+      "7. A.G.G", "8. L.I.S", "9. Q", "10. E.M.F", "11. L.N.G", "12. V.P.O",
+      "13. L.P.N", "14. V.R.M", "15. H.R.M", "16. H.S.A", "17. M.S.M", "18. A.V.P"
+    ];
+
+    // Gestión de Contraseña
+    function getPassword() {
+      return localStorage.getItem('ratones_pwd') || '1234';
+    }
 
     function checkPassword() {
       const pwd = document.getElementById('passwordInput').value;
-      if (pwd === SECRET) {
+      if (pwd === getPassword()) {
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainApp').classList.remove('hidden');
         renderCalendar();
       } else {
         document.getElementById('errorMsg').classList.remove('hidden');
+      }
+    }
+
+    function logout() {
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('errorMsg').classList.add('hidden');
+      closeSection();
+      document.getElementById('mainApp').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    function updatePassword() {
+      const newPwd = document.getElementById('newPwdInput').value.trim();
+      if (newPwd) {
+        localStorage.setItem('ratones_pwd', newPwd);
+        document.getElementById('pwdSuccessMsg').classList.remove('hidden');
+        document.getElementById('newPwdInput').value = '';
+        setTimeout(() => document.getElementById('pwdSuccessMsg').classList.add('hidden'), 3000);
       }
     }
 
@@ -147,7 +173,6 @@
       const grid = document.getElementById('calendarDays');
       grid.innerHTML = '';
 
-      // Offset para empezar en Lunes (0) en vez de Domingo
       let startOffset = (firstDay === 0 ? 6 : firstDay - 1);
 
       for (let i = 0; i < startOffset; i++) {
@@ -170,16 +195,74 @@
     // Navegación de Secciones
     function openSection(name) {
       document.getElementById('modalTitle').innerText = name;
+      const content = document.getElementById('modalContent');
+
+      if (name === 'Ajustes') {
+        content.innerHTML = `
+          <div class="space-y-6 pt-2">
+            <!-- Cambiar Contraseña -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                <i data-lucide="key" class="w-4 h-4 text-indigo-600"></i> Cambiar Contraseña
+              </h4>
+              <p class="text-xs text-slate-500 mb-3">Establece una nueva clave de acceso para tu app.</p>
+              <input type="password" id="newPwdInput" placeholder="Nueva contraseña" class="w-full p-2.5 border rounded-xl bg-white mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <button onclick="updatePassword()" class="w-full bg-indigo-600 text-white py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Guardar Nueva Contraseña</button>
+              <p id="pwdSuccessMsg" class="text-xs text-emerald-600 font-medium text-center mt-2 hidden">¡Contraseña actualizada con éxito!</p>
+            </div>
+
+            <!-- Cerrar Sesión -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                <i data-lucide="log-out" class="w-4 h-4 text-rose-500"></i> Sesión
+              </h4>
+              <p class="text-xs text-slate-500 mb-3">Cierra la sesión para proteger la información del aula.</p>
+              <button onclick="logout()" class="w-full bg-rose-500 text-white py-2 rounded-xl text-sm font-semibold hover:bg-rose-600 transition">Cerrar Sesión</button>
+            </div>
+          </div>
+        `;
+      } else if (name === 'Alumnos') {
+        let gridHtml = `<div class="grid grid-cols-2 gap-3 pt-1">`;
+        studentsList.forEach(student => {
+          gridHtml += `
+            <button onclick="openStudentDetail('${student}')" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 flex flex-col items-center justify-center space-y-2 active:scale-95 transition">
+              <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm">
+                ${student.split('.')[1] || student.substring(0,2)}
+              </div>
+              <span class="font-bold text-sm text-slate-800">${student}</span>
+            </button>
+          `;
+        });
+        gridHtml += `</div>`;
+        content.innerHTML = gridHtml;
+      } else {
+        content.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-64 text-center p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <div class="p-4 bg-indigo-50 text-indigo-600 rounded-full mb-3">
+              <i data-lucide="wrench" class="w-8 h-8"></i>
+            </div>
+            <h4 class="font-bold text-slate-700 mb-1">Sección de ${name}</h4>
+            <p class="text-sm text-slate-400">¡Lista para construir! Dime qué quieres meter aquí.</p>
+          </div>
+        `;
+      }
+
+      document.getElementById('sectionModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function openStudentDetail(studentName) {
+      document.getElementById('modalTitle').innerText = studentName;
       document.getElementById('modalContent').innerHTML = `
         <div class="flex flex-col items-center justify-center h-64 text-center p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-          <div class="p-4 bg-indigo-50 text-indigo-600 rounded-full mb-3">
-            <i data-lucide="wrench" class="w-8 h-8"></i>
+          <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-xl mb-3">
+            ${studentName.split('.')[1] || studentName.substring(0,2)}
           </div>
-          <h4 class="font-bold text-slate-700 mb-1">Sección de ${name}</h4>
-          <p class="text-sm text-slate-400">¡Lista para construir! Dime qué quieres meter aquí.</p>
+          <h4 class="font-bold text-slate-800 text-lg mb-1">${studentName}</h4>
+          <p class="text-xs text-slate-400 mb-4">Ficha del alumno</p>
+          <p class="text-sm text-slate-500 italic">Dime qué apartados o herramientas quieres meter dentro de la ficha de cada niño.</p>
         </div>
       `;
-      document.getElementById('sectionModal').classList.remove('hidden');
       lucide.createIcons();
     }
 
